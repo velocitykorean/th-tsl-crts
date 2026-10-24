@@ -1,0 +1,35 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+
+# Secrets & Sensitive Tokens
+.env
+.env*
+*token*.json
+client_secrets*.json
+credentials*.json
+*.pem
+*.key
+
+# Media Files & Large Outputs
+output/
+temp/
+*.mp4
+*.wav
+*.mp3
+
+# Model Weights (Auto-downloaded by runner from GitHub releases)
+models/*.onnx
+models/*.bin
+models/*.tmp
+
+# Logs & System
+*.log
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
