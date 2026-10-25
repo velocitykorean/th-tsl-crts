@@ -22,5 +22,29 @@
     "metadata_file": "metadata_ep1_20261024_171845.json",
     "channel": "THE TESLA CURRENTS",
     "handle": "@TheTeslaCurrents"
+  },
+  {
+    "episode": 2,
+    "topic": "The War of the Currents: Alternating Current and the Electrification of the Modern World",
+    "date": "2026-10-25T17:52:22.785278",
+    "duration_sec": 939.02,
+    "duration_min": 15.65,
+    "video_file": "tesla_ep2_20261025_173320.mp4",
+    "thumbnail_file": "thumb_ep2_20261025_173320.jpg",
+    "metadata_file": "metadata_ep2_20261025_173320.json",
+    "channel": "THE TESLA CURRENTS",
+    "handle": "@TheTeslaCurrents"
+  },
+  {
+    "episode": 2,
+    "topic": "The War of the Currents: Alternating Current and the Electrification of the Modern World",
+    "date": "2026-10-25T17:52:22.785278",
+    "duration_sec": 939.02,
+    "duration_min": 15.65,
+    "video_file": "tesla_ep2_20261025_173320.mp4",
+    "thumbnail_file": "thumb_ep2_20261025_173320.jpg",
+    "metadata_file": "metadata_ep2_20261025_173320.json",
+    "channel": "THE TESLA CURRENTS",
+    "handle": "@TheTeslaCurrents"
   }
 ]
