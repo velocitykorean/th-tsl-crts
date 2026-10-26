@@ -46,5 +46,30 @@
     "metadata_file": "metadata_ep2_20261025_173320.json",
     "channel": "THE TESLA CURRENTS",
     "handle": "@TheTeslaCurrents"
+  },
+  {
+    "episode": 3,
+    "topic": "Wireless Power and Wardenclyffe: The Tragedy of Free Global Energy",
+    "date": "2026-10-26T20:09:34.755274",
+    "duration_sec": 939.02,
+    "duration_min": 15.65,
+    "video_file": "tesla_ep3_20261026_195002.mp4",
+    "thumbnail_file": "thumb_ep3_20261026_195002.jpg",
+    "metadata_file": "metadata_ep3_20261026_195002.json",
+    "channel": "THE TESLA CURRENTS",
+    "handle": "@TheTeslaCurrents"
+  },
+  {
+    "episode": 3,
+    "topic": "Wireless Power and Wardenclyffe: The Tragedy of Free Global Energy",
+    "date": "2026-10-26T20:09:34.755274",
+    "duration_sec": 939.02,
+    "duration_min": 15.65,
+    "video_file": "tesla_ep3_20261026_195002.mp4",
+    "thumbnail_file": "thumb_ep3_20261026_195002.jpg",
+    "metadata_file": "metadata_ep3_20261026_195002.json",
+    "channel": "THE TESLA CURRENTS",
+    "handle": "@TheTeslaCurrents",
+    "youtube_url": "https://youtu.be/CRCJlRQwuDw"
   }
 ]
