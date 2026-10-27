@@ -72,6 +72,30 @@ const PODCAST_HISTORY = [
     "channel": "THE TESLA CURRENTS",
     "handle": "@TheTeslaCurrents",
     "youtube_url": "https://youtu.be/CRCJlRQwuDw"
+  },
+  {
+    "episode": 4,
+    "topic": "The Mystery of the Luminous Aether: Beyond Einstein and Modern Physics",
+    "date": "2026-10-27T19:38:26.970688",
+    "duration_sec": 939.02,
+    "duration_min": 15.65,
+    "video_file": "tesla_ep4_20261027_191948.mp4",
+    "thumbnail_file": "thumb_ep4_20261027_191948.jpg",
+    "metadata_file": "metadata_ep4_20261027_191948.json",
+    "channel": "THE TESLA CURRENTS",
+    "handle": "@TheTeslaCurrents"
+  },
+  {
+    "episode": 4,
+    "topic": "The Mystery of the Luminous Aether: Beyond Einstein and Modern Physics",
+    "date": "2026-10-27T19:38:26.970688",
+    "duration_sec": 939.02,
+    "duration_min": 15.65,
+    "video_file": "tesla_ep4_20261027_191948.mp4",
+    "thumbnail_file": "thumb_ep4_20261027_191948.jpg",
+    "metadata_file": "metadata_ep4_20261027_191948.json",
+    "channel": "THE TESLA CURRENTS",
+    "handle": "@TheTeslaCurrents"
   }
 ];
 if (typeof module !== 'undefined' && module.exports) { module.exports = PODCAST_HISTORY; }
