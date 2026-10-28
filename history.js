@@ -96,6 +96,31 @@ const PODCAST_HISTORY = [
     "metadata_file": "metadata_ep4_20261027_191948.json",
     "channel": "THE TESLA CURRENTS",
     "handle": "@TheTeslaCurrents"
+  },
+  {
+    "episode": 5,
+    "topic": "The Solitary Mind: Hyperphantasia, Celibacy, and the Burden of Prophetic Genius",
+    "date": "2026-10-28T19:45:07.365601",
+    "duration_sec": 939.02,
+    "duration_min": 15.65,
+    "video_file": "tesla_ep5_20261028_192546.mp4",
+    "thumbnail_file": "thumb_ep5_20261028_192546.jpg",
+    "metadata_file": "metadata_ep5_20261028_192546.json",
+    "channel": "THE TESLA CURRENTS",
+    "handle": "@TheTeslaCurrents"
+  },
+  {
+    "episode": 5,
+    "topic": "The Solitary Mind: Hyperphantasia, Celibacy, and the Burden of Prophetic Genius",
+    "date": "2026-10-28T19:45:07.365601",
+    "duration_sec": 939.02,
+    "duration_min": 15.65,
+    "video_file": "tesla_ep5_20261028_192546.mp4",
+    "thumbnail_file": "thumb_ep5_20261028_192546.jpg",
+    "metadata_file": "metadata_ep5_20261028_192546.json",
+    "channel": "THE TESLA CURRENTS",
+    "handle": "@TheTeslaCurrents",
+    "youtube_url": "https://youtu.be/U_v3PTDwRJw"
   }
 ];
 if (typeof module !== 'undefined' && module.exports) { module.exports = PODCAST_HISTORY; }
