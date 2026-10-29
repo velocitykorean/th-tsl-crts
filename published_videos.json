@@ -120,5 +120,29 @@
     "channel": "THE TESLA CURRENTS",
     "handle": "@TheTeslaCurrents",
     "youtube_url": "https://youtu.be/U_v3PTDwRJw"
+  },
+  {
+    "episode": 6,
+    "topic": "Resonance and Vibration: The Power to Move the Earth",
+    "date": "2026-10-29T19:44:59.216812",
+    "duration_sec": 939.02,
+    "duration_min": 15.65,
+    "video_file": "tesla_ep6_20261029_192915.mp4",
+    "thumbnail_file": "thumb_ep6_20261029_192915.jpg",
+    "metadata_file": "metadata_ep6_20261029_192915.json",
+    "channel": "THE TESLA CURRENTS",
+    "handle": "@TheTeslaCurrents"
+  },
+  {
+    "episode": 6,
+    "topic": "Resonance and Vibration: The Power to Move the Earth",
+    "date": "2026-10-29T19:44:59.216812",
+    "duration_sec": 939.02,
+    "duration_min": 15.65,
+    "video_file": "tesla_ep6_20261029_192915.mp4",
+    "thumbnail_file": "thumb_ep6_20261029_192915.jpg",
+    "metadata_file": "metadata_ep6_20261029_192915.json",
+    "channel": "THE TESLA CURRENTS",
+    "handle": "@TheTeslaCurrents"
   }
 ]
