@@ -144,5 +144,30 @@
     "metadata_file": "metadata_ep6_20261029_192915.json",
     "channel": "THE TESLA CURRENTS",
     "handle": "@TheTeslaCurrents"
+  },
+  {
+    "episode": 7,
+    "topic": "Signals from the Cosmos: The Colorado Springs Lightning Experiments",
+    "date": "2026-10-30T19:25:26.541871",
+    "duration_sec": 939.02,
+    "duration_min": 15.65,
+    "video_file": "tesla_ep7_20261030_190627.mp4",
+    "thumbnail_file": "thumb_ep7_20261030_190627.jpg",
+    "metadata_file": "metadata_ep7_20261030_190627.json",
+    "channel": "THE TESLA CURRENTS",
+    "handle": "@TheTeslaCurrents"
+  },
+  {
+    "episode": 7,
+    "topic": "Signals from the Cosmos: The Colorado Springs Lightning Experiments",
+    "date": "2026-10-30T19:25:26.541871",
+    "duration_sec": 939.02,
+    "duration_min": 15.65,
+    "video_file": "tesla_ep7_20261030_190627.mp4",
+    "thumbnail_file": "thumb_ep7_20261030_190627.jpg",
+    "metadata_file": "metadata_ep7_20261030_190627.json",
+    "channel": "THE TESLA CURRENTS",
+    "handle": "@TheTeslaCurrents",
+    "youtube_url": "https://youtu.be/eRrVHN4hpXw"
   }
 ]
