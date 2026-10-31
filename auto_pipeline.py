@@ -124,6 +124,7 @@ def run_auto_pipeline(target_minutes: float = 20.0, topic: str = None, dry_run: 
     record = {
         "episode": ep_num,
         "topic": story["topic"],
+        "dialogue_hash": story.get("dialogue_hash"),
         "date": datetime.now().isoformat(),
         "duration_sec": round(total_dur, 2),
         "duration_min": round(total_dur / 60.0, 2),

@@ -1,4 +1,4 @@
-import os, sys, json, time, requests, re
+import os, sys, json, time, requests, re, hashlib
 import config
 
 # Pre-crafted master curriculum for The Tesla Currents channel (Nikola Tesla scientific & philosophical masterworks)
@@ -121,6 +121,36 @@ TESLA_CURRICULUM = [
             ("Act 3: The Cold January Night of 1943", "The silent passing of an impoverished titan who gave humanity the electric age."),
             ("Act 4: The Seizure of the Trunks", "The FBI, the Alien Property Custodian, and the classified blueprints of a visionary."),
             ("Act 5: The Eternal Triumph of Nikola Tesla", "'The present is theirs; the future, for which I really worked, is mine.'")
+        ]
+    },
+    {
+        "id": "ep_9",
+        "topic": "The Philadelphia Experiment: Tesla, Invisibility, and the Myth of the Vanished Ship",
+        "focus": "The enduring legend of the 1943 naval invisibility tests: Tesla\u2019s rumored early role, unified field theory mythology, and what the documented historical record actually shows.",
+        "thumbnail_title_1": "THE VANISHED SHIP",
+        "thumbnail_title_2": "INVISIBLE NAVY",
+        "thumbnail_hook": "Did Tesla Make a Ship Disappear?",
+        "acts": [
+            ("Act 1: The Legend of the Eldridge", "A warship shrouded in green fog, sailors embedded in bulkheads, and a secret 1943 experiment."),
+            ("Act 2: Tesla\u2019s Unified Field Obsession", "The quest for a theory uniting gravity and electromagnetism that outlived its creator."),
+            ("Act 3: Resonance and the Veil of Matter", "Could tuned electromagnetic fields ever bend light and perception around solid steel?"),
+            ("Act 4: Fact, Fiction, and the Navy\u2019s Denial", "Declassified logs, contradictory witnesses, and the official record that says it never happened."),
+            ("Act 5: The Eternal Allure of the Impossible", "Why humanity needs Tesla myths: the inventor as modern Prometheus beyond the grave.")
+        ]
+    },
+    {
+        "id": "ep_10",
+        "topic": "The Death Ray and the Peace Beam: Tesla\u2019s Vision to End All War",
+        "focus": "Tesla\u2019s teleforce particle beam: a defensive shield of charged pellets meant to make borders impregnable and war itself obsolete.",
+        "thumbnail_title_1": "THE DEATH RAY",
+        "thumbnail_title_2": "PEACE BEAM",
+        "thumbnail_hook": "The Weapon That Could End War?",
+        "acts": [
+            ("Act 1: A Beam to End All Wars", "An 84-year-old inventor offers world leaders a weapon no army could withstand."),
+            ("Act 2: The Physics of Teleforce", "Macroscopic charged particles accelerated to staggering velocities through open air."),
+            ("Act 3: Letters to Kings and Presidents", "Tesla\u2019s appeals to America, Britain, and the League of Nations \u2014 all politely ignored."),
+            ("Act 4: The League of Impenetrable Borders", "A world where every nation is an unassailable fortress, and invasion is suicide."),
+            ("Act 5: The Prophet of Defensive Peace", "Peace not through disarmament, but through defense so absolute that aggression dies.")
         ]
     }
 ]
@@ -366,61 +396,194 @@ def load_history_topics() -> list:
                 pass
     return past
 
-def generate_dynamic_story_ai(topic: str = None, ep_num: int = 1, past_topics: list = None) -> dict:
-    """Uses Pollinations AI to dynamically generate an original Tesla episode."""
-    if past_topics is None:
-        past_topics = load_history_topics()
+# --- Robust AI dialogue generation (chunked, truncation-proof) ---
+TARGET_TURNS = 40
+TURNS_PER_ACT = (TARGET_TURNS + 4) // 5
+MAX_ACT_ATTEMPTS = 4
+MIN_TURNS = 30
+MIN_WORDS = 1500
+NARRATOR_NAME = "The Visionary"
+NARRATOR_SPEAKER = "male"
+NARRATOR_PERSONA = "Nikola Tesla's intellectual and spiritual successor, the lead visionary for 'The Tesla Currents' channel. Deep, poetic, aristocratic, prophetic narration in the cadence of Nikola Tesla"
 
-    print(f"[StoryGenerator] Invoking AI for dynamic visionary Tesla episode #{ep_num}...")
+
+def normalize_turn_text(text):
+    """Normalize turn text for duplicate detection."""
+    return re.sub(r'[^a-z0-9\s]', '', (text or '').lower()).strip()
+
+
+def dialogue_fingerprint(dialogue):
+    """Stable hash of a dialogue's normalized texts (order-independent)."""
+    norm = sorted(normalize_turn_text(t.get('text', '')) for t in dialogue or [])
+    norm = [t for t in norm if t]
+    return hashlib.sha256('\n'.join(norm).encode('utf-8')).hexdigest()
+
+
+def load_history_hashes():
+    """Load dialogue fingerprints of previously published episodes."""
+    hashes = set()
+    for fname in ["published_videos.json", "history.json"]:
+        fpath = os.path.join(config.BASE_DIR, fname)
+        if os.path.exists(fpath):
+            try:
+                with open(fpath, "r", encoding="utf-8") as f:
+                    data = json.load(f)
+                    if isinstance(data, list):
+                        for item in data:
+                            if isinstance(item, dict) and item.get("dialogue_hash"):
+                                hashes.add(item["dialogue_hash"])
+            except Exception:
+                pass
+    return hashes
+
+
+def repair_and_extract_turns(content, speaker="male", name=None):
+    """Extract valid dialogue turns from possibly-truncated AI JSON.
+
+    Salvages every complete turn object even when the response was cut off
+    mid-stream, so truncated calls still contribute usable turns.
+    """
+    name = name or NARRATOR_NAME
+    turns = []
+    if not content:
+        return turns
+    text = content.strip()
+    if "```json" in text:
+        text = text.split("```json", 1)[1].split("```", 1)[0].strip()
+    elif "```" in text:
+        text = text.split("```", 1)[1].split("```", 1)[0].strip()
+    candidates = []
+    try:
+        obj = json.loads(text)
+        if isinstance(obj, dict) and isinstance(obj.get("dialogue"), list):
+            candidates = obj["dialogue"]
+        elif isinstance(obj, list):
+            candidates = obj
+    except Exception:
+        obj = None
+    if not candidates:
+        for m in re.finditer(r'\{[^{}]*"text"\s*:\s*"(?:[^"\\]|\\.)*"[^{}]*\}', text):
+            try:
+                candidates.append(json.loads(m.group(0)))
+            except Exception:
+                continue
+    for c in candidates:
+        if not isinstance(c, dict):
+            continue
+        t = (c.get("text") or "").strip()
+        if not t:
+            continue
+        turns.append({
+            "speaker": c.get("speaker") or speaker,
+            "name": c.get("name") or name,
+            "text": t,
+        })
+    return turns
+
+
+def _pollinations_endpoint():
+    return getattr(config, "POLLINATIONS_ENDPOINT", None) or "https://text.pollinations.ai/"
+
+
+def _pollinations_model():
+    return getattr(config, "POLLINATIONS_MODEL", None) or "openai"
+
+
+def request_dialogue_chunk(act_title, act_summary, topic, ep_num, need, tail_texts, attempt, past_topics=None):
+    """One small AI call for a few turns of a single act. Raises on failure."""
+    endpoint = _pollinations_endpoint()
+    model = _pollinations_model()
     headers = {"Content-Type": "application/json"}
-    api_key = os.environ.get("POLLINATIONS_API_KEY")
+    api_key = os.environ.get("POLLINATIONS_API_KEY") or getattr(config, "POLLINATIONS_API_KEY", "")
     if api_key:
         headers["Authorization"] = f"Bearer {api_key}"
+    continuity = ""
+    if tail_texts:
+        continuity = ("Story so far (continue seamlessly, do not repeat these ideas):\n"
+                      + "\n".join(f"- {t[:220]}" for t in tail_texts[-2:]) + "\n")
+    avoid = ""
+    if past_topics:
+        avoid = f"Do not cover these already-published topics: {'; '.join(past_topics[:12])}.\n"
+    prompt = f"""You are {NARRATOR_PERSONA}.
+Write EXACTLY {need} consecutive dialogue turns for Episode #{ep_num} about "{topic}".
+Current act: {act_title} - {act_summary}.
+{continuity}{avoid}RULES:
+1. Single narrator named "{NARRATOR_NAME}" (speaker "male").
+2. Each turn 60-100 words of rich, substantive narration, fresh ideas only, no repetition within or across turns.
+3. Return ONLY a JSON array: [{{"speaker": "male", "name": "{NARRATOR_NAME}", "text": "..."}}]"""
+    payload = {
+        "model": model,
+        "messages": [{"role": "user", "content": prompt}],
+        "temperature": round(min(1.1, 0.85 + 0.05 * attempt), 2),
+        "max_tokens": 2500,
+    }
+    r = requests.post(endpoint, json=payload, headers=headers, timeout=90)
+    if r.status_code != 200:
+        raise RuntimeError(f"AI HTTP {r.status_code}: {(r.text or '')[:200]}")
+    data = r.json()
+    if isinstance(data, dict) and data.get("choices"):
+        content = data["choices"][0]["message"]["content"]
+        turns = repair_and_extract_turns(content)
+        if not turns:
+            raise RuntimeError("AI returned no usable dialogue turns")
+        return turns
+    if isinstance(data, dict) and isinstance(data.get("dialogue"), list):
+        turns = repair_and_extract_turns(json.dumps(data["dialogue"]))
+        if turns:
+            return turns
+        raise RuntimeError("AI returned no usable dialogue turns")
+    if isinstance(data, list):
+        turns = repair_and_extract_turns(json.dumps(data))
+        if turns:
+            return turns
+        raise RuntimeError("AI returned no usable dialogue turns")
+    raise RuntimeError("AI returned an unrecognized response shape")
 
-    avoid_clause = f"AVOID repeating these already covered topics: {', '.join(past_topics)}" if past_topics else ""
 
-    prompt = f"""You are Nikola Tesla's intellectual and spiritual successor, the lead visionary for 'The Tesla Currents' channel.
-Generate a master 20-minute spoken scientific and philosophical video episode (Episode #{ep_num}).
-{avoid_clause}
-Topic override: {topic if topic else 'Choose a profound theme from Nikola Tesla (e.g. 3 6 9 Code, War of the Currents, Wardenclyffe Free Energy, The Luminous Aether, Resonance, Cosmic Signals)'}.
-
-Return ONLY valid JSON matching this exact structure:
-{{
-  "topic": "Comprehensive Title of the Tesla Topic",
-  "focus": "2-3 sentences explaining the core visionary and scientific inquiry.",
-  "thumbnail_title_1": "2-4 WORDS HEADLINE 1 (e.g. THE 3 6 9 CODE)",
-  "thumbnail_title_2": "2-4 WORDS HEADLINE 2 (e.g. COSMIC ENERGY)",
-  "thumbnail_hook": "Short curiosity question (e.g. The Secret Key to the Universe)",
-  "acts": [
-    ["Act 1: Title", "Summary"],
-    ["Act 2: Title", "Summary"],
-    ["Act 3: Title", "Summary"],
-    ["Act 4: Title", "Summary"],
-    ["Act 5: Title", "Summary"]
-  ],
-  "dialogue": [
-    {{"speaker": "male", "name": "The Visionary", "text": "Deep, poetic, aristocratic, prophetic narration in the cadence of Nikola Tesla..."}}
-  ]
-}}
-Ensure the dialogue contains at least 35 to 40 rich turns (~2,200 words total) divided evenly across the 5 acts.
-"""
-
-    try:
-        r = requests.post(
-            "https://text.pollinations.ai/",
-            json={"messages": [{"role": "user", "content": prompt}], "jsonMode": True},
-            headers=headers,
-            timeout=90
-        )
-        if r.status_code == 200:
-            data = r.json()
-            if isinstance(data, dict) and data.get("dialogue") and len(data["dialogue"]) >= 15:
-                print(f"[StoryGenerator] AI successfully generated {len(data['dialogue'])} turns for '{data.get('topic')}'.")
-                return data
-    except Exception as e:
-        print(f"[StoryGenerator] AI generation encountered issue ({e}). Proceeding to curriculum...")
-
-    return None
+def generate_dynamic_story_ai(topic=None, ep_num=1, past_topics=None, acts=None, target_turns=None):
+    """Builds original dialogue act-by-act with retries. Raises instead of
+    silently reusing a previous episode's script."""
+    if past_topics is None:
+        past_topics = load_history_topics()
+    if not acts:
+        acts = [("Full Episode", topic or "")]
+    if not target_turns:
+        target_turns = TARGET_TURNS
+    per_act = max(2, (target_turns + len(acts) - 1) // len(acts))
+    dialogue = []
+    seen = set()
+    for act_idx, act in enumerate(acts):
+        act_title = act[0] if isinstance(act, (list, tuple)) else str(act)
+        act_summary = act[1] if isinstance(act, (list, tuple)) and len(act) > 1 else ""
+        collected = 0
+        for attempt in range(MAX_ACT_ATTEMPTS):
+            try:
+                tail = [t["text"] for t in dialogue[-2:]]
+                chunk = request_dialogue_chunk(
+                    act_title, act_summary, topic, ep_num, per_act, tail,
+                    attempt + act_idx, past_topics)
+                fresh = 0
+                for t in chunk:
+                    norm = normalize_turn_text(t.get("text", ""))
+                    if norm and norm not in seen and len(t.get("text", "").split()) >= 5:
+                        seen.add(norm)
+                        dialogue.append(t)
+                        fresh += 1
+                        collected += 1
+                        if collected >= per_act:
+                            break
+                print(f"[StoryGenerator] Act {act_idx + 1}/{len(acts)} attempt {attempt + 1}: +{fresh} turns "
+                      f"(total {len(dialogue)}/{target_turns})")
+                if collected >= per_act:
+                    break
+            except Exception as e:
+                print(f"[StoryGenerator] Act {act_idx + 1}/{len(acts)} attempt {attempt + 1} issue: {e}")
+                time.sleep(2)
+        if collected < max(2, per_act - 2):
+            raise RuntimeError(
+                f"AI dialogue generation failed for act {act_idx + 1} ('{act_title}') after "
+                f"{MAX_ACT_ATTEMPTS} attempts. Aborting instead of publishing a repeat.")
+    return {"topic": topic, "focus": "", "dialogue": dialogue}
 
 def generate_full_podcast_story(target_minutes: float = 20.0, topic: str = None, ep_num: int = 1) -> dict:
     """Generates the full story dialogue and chapter structure for the episode."""
@@ -447,19 +610,27 @@ def generate_full_podcast_story(target_minutes: float = 20.0, topic: str = None,
         curriculum_idx = (ep_num - 1) % len(TESLA_CURRICULUM)
         catalog_item = TESLA_CURRICULUM[curriculum_idx]
 
-    dialogue = None
     if catalog_item["id"] == "ep_1":
         dialogue = EPISODE_1_SCRIPT
     else:
-        ai_story = generate_dynamic_story_ai(topic=catalog_item["topic"], ep_num=ep_num, past_topics=past_topics)
-        if ai_story and ai_story.get("dialogue"):
-            catalog_item["thumbnail_title_1"] = ai_story.get("thumbnail_title_1", catalog_item["thumbnail_title_1"])
-            catalog_item["thumbnail_title_2"] = ai_story.get("thumbnail_title_2", catalog_item["thumbnail_title_2"])
-            catalog_item["thumbnail_hook"] = ai_story.get("thumbnail_hook", catalog_item["thumbnail_hook"])
-            dialogue = ai_story["dialogue"]
+        ai_story = generate_dynamic_story_ai(
+            topic=catalog_item["topic"],
+            ep_num=ep_num,
+            past_topics=past_topics,
+            acts=catalog_item["acts"],
+            target_turns=TARGET_TURNS,
+        )
+        dialogue = ai_story["dialogue"]
 
-    if not dialogue:
-        dialogue = EPISODE_1_SCRIPT
+    total_script_words = sum(len((t.get("text") or "").split()) for t in dialogue or [])
+    if not dialogue or len(dialogue) < MIN_TURNS or total_script_words < MIN_WORDS:
+        raise RuntimeError(
+            f"AI dialogue generation produced only {len(dialogue or [])} turns / {total_script_words} words "
+            f"(minimum {MIN_TURNS} turns / {MIN_WORDS} words). Aborting instead of publishing a repeat.")
+
+    dialogue_hash = dialogue_fingerprint(dialogue)
+    if dialogue_hash in load_history_hashes():
+        raise RuntimeError("Generated dialogue duplicates a previously published episode. Aborting instead of publishing a repeat.")
 
     total_turns = len(dialogue)
     turns_per_act = max(1, total_turns // 5)
@@ -487,7 +658,8 @@ def generate_full_podcast_story(target_minutes: float = 20.0, topic: str = None,
         "thumbnail_title_2": catalog_item["thumbnail_title_2"],
         "thumbnail_hook": catalog_item["thumbnail_hook"],
         "chapters": chapters,
-        "dialogue": dialogue
+        "dialogue": dialogue,
+        "dialogue_hash": dialogue_hash
     }
 
 def generate_metadata(topic: str, total_duration_sec: float, chapters: list, ep_num: int = 1, story: dict = None) -> dict:
