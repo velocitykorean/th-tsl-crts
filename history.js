@@ -194,6 +194,33 @@ const PODCAST_HISTORY = [
     "metadata_file": "metadata_ep8_20261031_182425.json",
     "channel": "THE TESLA CURRENTS",
     "handle": "@TheTeslaCurrents"
+  },
+  {
+    "episode": 9,
+    "topic": "The Philadelphia Experiment: Tesla, Invisibility, and the Myth of the Vanished Ship",
+    "dialogue_hash": "551b45fc7122a29dd60fcff8e89f05265c5fde2bacc5aafc4b4d1712b8628459",
+    "date": "2026-10-31T23:15:23.092384",
+    "duration_sec": 870.98,
+    "duration_min": 14.52,
+    "video_file": "tesla_ep9_20261031_230105.mp4",
+    "thumbnail_file": "thumb_ep9_20261031_230105.jpg",
+    "metadata_file": "metadata_ep9_20261031_230105.json",
+    "channel": "THE TESLA CURRENTS",
+    "handle": "@TheTeslaCurrents"
+  },
+  {
+    "episode": 9,
+    "topic": "The Philadelphia Experiment: Tesla, Invisibility, and the Myth of the Vanished Ship",
+    "dialogue_hash": "551b45fc7122a29dd60fcff8e89f05265c5fde2bacc5aafc4b4d1712b8628459",
+    "date": "2026-10-31T23:15:23.092384",
+    "duration_sec": 870.98,
+    "duration_min": 14.52,
+    "video_file": "tesla_ep9_20261031_230105.mp4",
+    "thumbnail_file": "thumb_ep9_20261031_230105.jpg",
+    "metadata_file": "metadata_ep9_20261031_230105.json",
+    "channel": "THE TESLA CURRENTS",
+    "handle": "@TheTeslaCurrents",
+    "youtube_url": "https://youtu.be/_9r1gEYd1Zo"
   }
 ];
 if (typeof module !== 'undefined' && module.exports) { module.exports = PODCAST_HISTORY; }
