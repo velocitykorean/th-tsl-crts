@@ -221,6 +221,32 @@ const PODCAST_HISTORY = [
     "channel": "THE TESLA CURRENTS",
     "handle": "@TheTeslaCurrents",
     "youtube_url": "https://youtu.be/_9r1gEYd1Zo"
+  },
+  {
+    "episode": 10,
+    "topic": "The Death Ray and the Peace Beam: Tesla’s Vision to End All War",
+    "dialogue_hash": "b60715e4b229897f7412b7b9a76b931fce6a5fd78bfe88424bddfd80e52b22eb",
+    "date": "2026-11-01T19:10:12.427379",
+    "duration_sec": 1040.89,
+    "duration_min": 17.35,
+    "video_file": "tesla_ep10_20261101_184908.mp4",
+    "thumbnail_file": "thumb_ep10_20261101_184908.jpg",
+    "metadata_file": "metadata_ep10_20261101_184908.json",
+    "channel": "THE TESLA CURRENTS",
+    "handle": "@TheTeslaCurrents"
+  },
+  {
+    "episode": 10,
+    "topic": "The Death Ray and the Peace Beam: Tesla’s Vision to End All War",
+    "dialogue_hash": "b60715e4b229897f7412b7b9a76b931fce6a5fd78bfe88424bddfd80e52b22eb",
+    "date": "2026-11-01T19:10:12.427379",
+    "duration_sec": 1040.89,
+    "duration_min": 17.35,
+    "video_file": "tesla_ep10_20261101_184908.mp4",
+    "thumbnail_file": "thumb_ep10_20261101_184908.jpg",
+    "metadata_file": "metadata_ep10_20261101_184908.json",
+    "channel": "THE TESLA CURRENTS",
+    "handle": "@TheTeslaCurrents"
   }
 ];
 if (typeof module !== 'undefined' && module.exports) { module.exports = PODCAST_HISTORY; }
