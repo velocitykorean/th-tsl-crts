@@ -247,6 +247,33 @@ const PODCAST_HISTORY = [
     "metadata_file": "metadata_ep10_20261101_184908.json",
     "channel": "THE TESLA CURRENTS",
     "handle": "@TheTeslaCurrents"
+  },
+  {
+    "episode": 11,
+    "topic": "If You Only Knew the Magnificence of 3, 6, and 9: The Cosmic Geometry of Energy",
+    "dialogue_hash": "a5fcc2759de43f804f406992176dfa8677d4f1fcd558073e3fafda7fc5f4d671",
+    "date": "2026-11-02T22:50:05.155958",
+    "duration_sec": 939.02,
+    "duration_min": 15.65,
+    "video_file": "tesla_ep11_20261102_224103.mp4",
+    "thumbnail_file": "thumb_ep11_20261102_224103.jpg",
+    "metadata_file": "metadata_ep11_20261102_224103.json",
+    "channel": "THE TESLA CURRENTS",
+    "handle": "@TheTeslaCurrents"
+  },
+  {
+    "episode": 11,
+    "topic": "If You Only Knew the Magnificence of 3, 6, and 9: The Cosmic Geometry of Energy",
+    "dialogue_hash": "a5fcc2759de43f804f406992176dfa8677d4f1fcd558073e3fafda7fc5f4d671",
+    "date": "2026-11-02T22:50:05.155958",
+    "duration_sec": 939.02,
+    "duration_min": 15.65,
+    "video_file": "tesla_ep11_20261102_224103.mp4",
+    "thumbnail_file": "thumb_ep11_20261102_224103.jpg",
+    "metadata_file": "metadata_ep11_20261102_224103.json",
+    "channel": "THE TESLA CURRENTS",
+    "handle": "@TheTeslaCurrents",
+    "youtube_url": "https://youtu.be/uHkgPFD2e6w"
   }
 ];
 if (typeof module !== 'undefined' && module.exports) { module.exports = PODCAST_HISTORY; }
