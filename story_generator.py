@@ -486,7 +486,7 @@ def _pollinations_endpoint():
 
 
 def _pollinations_model():
-    return getattr(config, "POLLINATIONS_MODEL", None) or "openai"
+    return getattr(config, "POLLINATIONS_MODEL", None) or "openai/gpt-5.4-nano"
 
 
 def request_dialogue_chunk(act_title, act_summary, topic, ep_num, need, tail_texts, attempt, past_topics=None):

@@ -69,9 +69,9 @@ MAX_WORDS_PER_CHUNK = 14
 MAX_CHARS_PER_LINE = 28
 
 # AI Generation Settings
-POLLINATIONS_API_KEY = os.environ.get("POLLINATIONS_API_KEY", "sk_B0I1QMA8hWP14sICrnx1S1pt8riQdpLZ")
+POLLINATIONS_API_KEY = os.environ.get("POLLINATIONS_API_KEY")
 POLLINATIONS_ENDPOINT = "https://gen.pollinations.ai/v1/chat/completions"
-POLLINATIONS_MODEL = "gemini-fast"
+POLLINATIONS_MODEL = "openai/gpt-5.4-nano"
 NICHE_PROMPT = "Profound philosophical and scientific contemplation on Nikola Tesla's visionary theories of the cosmos, 3-6-9 universal resonance, wireless power, the luminous aether, the mysteries of electricity, and the eternal clash between solitary genius and modern commercial exploitation, narrated with cosmic wonder, deep intellectual authority, and dramatic gravitas."
 
 # Typography Candidates
